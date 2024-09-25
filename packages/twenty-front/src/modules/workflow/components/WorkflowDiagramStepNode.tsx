@@ -1,8 +1,9 @@
+import { FloatingIconButton } from '@/ui/input/button/components/FloatingIconButton';
 import { WorkflowDiagramBaseStepNode } from '@/workflow/components/WorkflowDiagramBaseStepNode';
 import { WorkflowDiagramStepNodeData } from '@/workflow/types/WorkflowDiagram';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { IconCode, IconPlaylistAdd } from 'twenty-ui';
+import { IconCode, IconPlaylistAdd, IconTrash } from 'twenty-ui';
 
 const StyledStepNodeLabelIconContainer = styled.div`
   align-items: center;
@@ -15,8 +16,10 @@ const StyledStepNodeLabelIconContainer = styled.div`
 
 export const WorkflowDiagramStepNode = ({
   data,
+  selected,
 }: {
   data: WorkflowDiagramStepNodeData;
+  selected: boolean;
 }) => {
   const theme = useTheme();
 
@@ -49,6 +52,17 @@ export const WorkflowDiagramStepNode = ({
       nodeType={data.nodeType}
       label={data.label}
       Icon={renderStepIcon()}
+      RightFloatingElement={
+        selected ? (
+          <FloatingIconButton
+            Icon={IconTrash}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            }}
+          />
+        ) : undefined
+      }
     />
   );
 };
